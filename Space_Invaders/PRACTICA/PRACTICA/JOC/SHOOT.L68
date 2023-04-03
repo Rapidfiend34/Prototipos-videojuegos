@@ -1,0 +1,250 @@
+00002890 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 08/01/2023 13:18:36
+
+00000000                             1  ; ==============================================================================
+00000000                             2  ; SHOOT MANAGEMENT (AGENT)
+00000000                             3  ; SHIPPOSX  (W)      (A0)
+00000000                             4  ; SHIPPOSY  (W)     2(A0)
+00000000                             5  ; ==============================================================================
+00000000                             6              
+00000000                             7  ; ------------------------------------------------------------------------------
+00000000                             8  SHOTINIT
+00000000                             9  ; INITIALIZE SHOOT.
+00000000                            10  ; INPUT    : NONE 
+00000000                            11  ; OUTPUT   : NONE
+00000000                            12  ; MODIFIES : NONE
+00000000                            13  ; ------------------------------------------------------------------------------
+00000000  48E7 8080                 14              MOVEM.L D0/A0,-(A7)
+Line 15 ERROR: Undefined symbol
+00000004  30B9 004DBD16             15              MOVE.W  (SHIPPOSX),(A0)
+Line 16 ERROR: Undefined symbol
+0000000A  3179 004DBD16 0002        16              MOVE.W  (SHIPPOSY),2(A0)
+Line 17 ERROR: Comma expected
+00000012                            17              SUB.W   #SHIPHEIG/2,2(A0)
+Line 18 ERROR: Undefined symbol
+00000012  0468 BD16 0002            18              SUB.W   #SHOTRAD,2(A0)
+Line 19 ERROR: Undefined symbol
+00000018  33FC BD16 005455B8        19              MOVE.W  #SHOTSPED,(SHOTVELY)
+00000020  4CDF 0101                 20              MOVEM.L (A7)+,D0/A0
+00000024  4E75                      21              RTS
+00000026                            22              
+00000026                            23  ; ------------------------------------------------------------------------------
+Line 24 ERROR: Symbol value differs between first and second pass
+00000026                            24  SHOTUPD
+00000026                            25  ; UPDATES THE SHOOT.
+00000026                            26  ; INPUT    : NONE 
+00000026                            27  ; OUTPUT   : NONE
+00000026                            28  ; MODIFIES : NONE
+00000026                            29  ; ------------------------------------------------------------------------------
+00000026                            30  
+00000026  48A7 F0C0                 31              MOVEM.W D0-D3/A0-A1,-(A7)
+0000002A                            32  
+0000002A                            33              ; UPDATE SHOOT COORDINATES
+0000002A  43D0                      34              LEA.L   (A0),A1
+0000002C  3229 0002                 35              MOVE.W  2(A1),D1
+Line 36 ERROR: Undefined symbol
+00000030  9279 004DBD16             36              SUB.W   (SHOTVELY),D1
+00000036                            37              
+00000036                            38  
+00000036                            39              ; CHECK VERTICAL COLLISIONS
+Line 40 ERROR: Comma expected
+00000036                            40              CMP.W   #SCRHEIGH-SHOTRAD,D1
+00000036  6E00 00CE                 41              BGT     .COLBOT
+0000003A  B27C 0000                 42              CMP.W   #0,D1
+0000003E  6D00 00D4                 43              BLT     .COLTOP
+00000042  303C 0002                 44              MOVE.W  #2,D0
+Line 45 ERROR: Undefined symbol
+00000046  4EB9 004DBD16             45              JSR     DMMFRSTO
+Line 46 ERROR: Symbol value differs between first and second pass
+0000004C                            46  .LOOP       CMP.L   #0,A0
+0000004C  6700 009A                 47              BEQ     .CHKGUIDE
+00000050  5088                      48              ADD.L   #8,A0
+00000052                            49  
+00000052  6000 0012                 50              BRA     .MAREJY0
+00000056                            51              
+Line 52 ERROR: Symbol value differs between first and second pass
+00000056                            52  .MAREJY0     ;Y0    COLLISION
+00000056  3629 0002                 53              MOVE.W  2(A1),D3
+0000005A  3428 0002                 54              MOVE.W  2(A0),D2
+Line 55 ERROR: Comma expected
+0000005E                            55              ADD.W   #MARHEIGH/2+SHOTRAD,D2
+0000005E  B642                      56              CMP.W   D2,D3
+00000060  6D00 001A                 57              BLT     .MAREJY1          
+00000064  6000 0070                 58              BRA     .NEXT
+00000068                            59              
+Line 60 ERROR: Symbol value differs between first and second pass
+00000068                            60  .MAREJY1
+00000068  3428 0002                 61              MOVE.W  2(A0),D2
+Line 62 ERROR: Comma expected
+0000006C                            62              SUB.W   #MARHEIGH/2+SHOTRAD,D2
+0000006C  B642                      63              CMP.W   D2,D3
+0000006E  6E00 001E                 64              BGT     .MAREJX0
+00000072  6000 0062                 65              BRA     .NEXT
+00000076                            66              
+Line 67 ERROR: Symbol value differs between first and second pass
+00000076                            67  .MAREJX0    
+00000076  3410                      68              MOVE.W  (A0),D2
+Line 69 ERROR: Comma expected
+00000078                            69              SUB.W   #MARWIDTH/2 ,D2
+Line 70 ERROR: Undefined symbol
+00000078  0442 BD16                 70              SUB.W   #SHOTRAD,D2
+0000007C  3611                      71              MOVE.W  (A1),D3
+0000007E  B642                      72              CMP.W   D2,D3
+00000080  6E00 0022                 73              BGT     .MAREJX1
+00000084  6000 0050                 74              BRA     .NEXT
+00000088                            75              
+Line 76 ERROR: Symbol value differs between first and second pass
+00000088                            76  .MAREJX1    MOVE.W  (A0),D2
+Line 77 ERROR: Comma expected
+00000088                            77              ADD.W   #MARWIDTH/2,D2
+Line 78 ERROR: Undefined symbol
+00000088  0642 BD16                 78              ADD.W   #SHOTRAD,D2
+0000008C  B642                      79              CMP.W   D2,D3
+0000008E  6E00 0046                 80              BGT     .NEXT
+00000092  3E3C 0000                 81              MOVE.W  #0,D7
+00000096  4E42                      82              TRAP    #2
+Line 83 ERROR: Undefined symbol
+00000098  4EB9 004DBD16             83              JSR     AGLKILL
+Line 84 ERROR: Undefined symbol
+0000009E  5379 005455B8             84              SUBQ.W  #1,(MAXMAR)
+Line 85 ERROR: Undefined symbol
+000000A4  0679 BD16 005455B8        85              ADD.W  #POINTS,(SCOOUT)
+000000AC  41D1                      86              LEA.L   (A1),A0
+Line 87 ERROR: Undefined symbol
+000000AE  4EB9 004DBD16             87              JSR     AGLKILL
+000000B4                            88              ;BRA     .DONE
+Line 89 ERROR: Symbol value differs between first and second pass
+000000B4                            89  .NEXT       JSR     DMMNEXTO
+000000B4  B07C 0002                 90              CMP.W   #2,D0
+000000B8  6600 0038                 91              BNE     .GUIDELOOP
+000000BC  6098                      92              BRA     .LOOP
+000000BE                            93              
+000000BE                            94              
+Line 95 ERROR: Symbol value differs between first and second pass
+000000BE                            95  .CHKGUIDE   MOVE.W  #4,D0
+Line 96 ERROR: Undefined symbol
+000000BE  4EB9 004DBD16             96              JSR     DMMFRSTO
+Line 97 ERROR: Symbol value differs between first and second pass
+000000C4                            97  .GUIDELOOP  CMP.L   #0,A0
+000000C4  6700 0058                 98              BEQ     .DONE
+000000C8  5088                      99              ADD.L   #8,A0
+000000CA                           100  
+000000CA  609A                     101              BRA     .MAREJY0
+000000CC  6000 0050                102              BRA     .DONE
+000000D0                           103              
+000000D0                           104  
+000000D0                           105              
+000000D0                           106  
+000000D0                           107              ; BOTTOM COLLISION
+Line 108 ERROR: Symbol value differs between first and second pass
+000000D0                           108  .COLBOT     NEG.W   (SHOTVELY)
+Line 109 ERROR: Comma expected
+000000D0                           109              MOVE.W  #SCRHEIGH-SHOTRAD,D1
+000000D0  6000 004C                110              BRA     .DONE
+000000D4                           111           
+000000D4                           112              
+000000D4                           113              
+000000D4                           114              ; TOP COLLISION
+Line 115 ERROR: Symbol value differs between first and second pass
+000000D4                           115  .COLTOP     JSR   AGLKILL
+000000D4  6000 0048                116              BRA   .DONE
+000000D8                           117  
+000000D8                           118    
+000000D8                           119  
+000000D8                           120            ; STORE POSITION
+Line 121 ERROR: Symbol value differs between first and second pass
+000000D8                           121  .DONE      MOVE.W  D1,2(A1)
+000000D8  4C9F 030F                122            MOVEM.W (A7)+,D0-D3/A0-A1
+000000DC                           123  
+000000DC  4E75                     124              RTS
+000000DE                           125              
+000000DE                           126  ; ------------------------------------------------------------------------------
+Line 127 ERROR: Symbol value differs between first and second pass
+000000DE                           127  SHOTPLOT
+000000DE                           128  ; PLOT THE SHOOT.
+000000DE                           129  ; INPUT    : NONE 
+000000DE                           130  ; OUTPUT   : NONE
+000000DE                           131  ; MODIFIES : NONE
+000000DE                           132  ; ------------------------------------------------------------------------------
+000000DE  48E7 F800                133              MOVEM.L D0-D4,-(A7)
+000000E2                           134  
+000000E2                           135              ; SET PEN COLOR
+000000E2  103C 0050                136              MOVE.B  #80,D0
+Line 137 ERROR: Undefined symbol
+000000E6  223C 004DBD16            137              MOVE.L  #SHOTPCOL,D1
+000000EC  4E4F                     138              TRAP    #15
+000000EE                           139              
+000000EE                           140              ; SET FILL COLOR
+000000EE  103C 0051                141              MOVE.B  #81,D0
+Line 142 ERROR: Undefined symbol
+000000F2  223C 004DBD16            142              MOVE.L  #SHOTFCOL,D1
+000000F8  4E4F                     143              TRAP    #15
+000000FA                           144              
+000000FA                           145              ; DEFINE COORDINATES
+000000FA  3210                     146              MOVE.W  (A0),D1
+Line 147 ERROR: Undefined symbol
+000000FC  0441 BD16                147              SUB.W   #SHOTRAD,D1
+00000100  3428 0002                148              MOVE.W  2(A0),D2
+Line 149 ERROR: Undefined symbol
+00000104  0442 BD16                149              SUB.W   #SHOTRAD,D2
+00000108  3601                     150              MOVE.W  D1,D3
+Line 151 ERROR: Undefined symbol
+0000010A  0643 BD16                151              ADD.W   #2*SHOTRAD,D3
+0000010E  3802                     152              MOVE.W  D2,D4
+Line 153 ERROR: Undefined symbol
+00000110  0644 BD16                153              ADD.W   #2*SHOTRAD,D4
+00000114                           154              
+00000114                           155              ; DRAW CIRCLE
+00000114  103C 0058                156              MOVE.B  #88,D0
+00000118  4E4F                     157              TRAP    #15
+0000011A                           158              
+0000011A  4CDF 001F                159              MOVEM.L (A7)+,D0-D4
+0000011E                           160  
+0000011E  4E75                     161              RTS
+00000120                           162  
+00000120                           163  
+00000120                           164  
+00000120                           165  
+00000120                           166  
+00000120                           167  
+00000120                           168  
+00000120                           169  
+00000120                           170  
+00000120                           171  
+00000120                           172  
+00000120                           173  
+00000120                           174  
+00000120                           175  
+00000120                           176  
+00000120                           177  
+00000120                           178  
+00000120                           179  
+00000120                           180  
+00000120                           181  
+00000120                           182  
+00000120                           183  
+00000120                           184  
+Line 185 WARNING: END directive missing, starting address not set
+
+39 errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+SHOTINIT            0
+SHOTPLOT            128
+SHOTUPD             2C
+SHOTUPD:CHKGUIDE    E8
+SHOTUPD:COLBOT      106
+SHOTUPD:COLTOP      114
+SHOTUPD:DONE        11E
+SHOTUPD:GUIDELOOP   F2
+SHOTUPD:LOOP        56
+SHOTUPD:MAREJX0     8E
+SHOTUPD:MAREJX1     A4
+SHOTUPD:MAREJY0     66
+SHOTUPD:MAREJY1     7C
+SHOTUPD:NEXT        D6

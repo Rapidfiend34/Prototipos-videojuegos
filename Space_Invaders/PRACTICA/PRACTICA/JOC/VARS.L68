@@ -1,0 +1,123 @@
+00002890 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 08/01/2023 22:25:11
+
+00000000                             1  ; ==============================================================================
+00000000                             2  ; GAME VARIABLES
+00000000                             3  ; ==============================================================================
+00000000                             4  
+00000000                             5  ; --- BUTTON RELATED VARIABLES -------------------------------------------------
+00000000                             6  TOUCHED     DS.W    1
+00000002= 00000000                   7  BUTCOL1     DC.L    0
+00000006= 00000000                   8  BUTCOL2     DC.L    0
+0000000A= 00000000                   9  BUTCOL3     DC.L    0
+0000000E                            10  
+0000000E                            11  
+0000000E                            12  ; --- SHOOT RELATED VARIABLES --------------------------------------------------
+0000000E                            13  
+0000000E                            14  SHOTPOSX     DS.W    1                       ; SHOOT X COORDINATE
+00000010                            15  SHOTPOSY     DS.W    1                       ; SHOOT Y COORDINATE
+00000012                            16  SHOTVELY     DS.W    1                       ; SHOOT Y VELOCITY
+00000014= 000A                      17  SHOTIMER     DC.W    10                      ; SHOOT TIMER
+00000016                            18  
+00000016                            19  ; --- MARCIANOS RELATED VARIABLES-----------------------------------------------
+00000016                            20  
+00000016                            21  MARPOSX     DS.W    1                       ;MARCIANOS X COORDINATE
+00000018                            22  MARPOSY     DS.W    1                       ;MARCIANOS Y COORDINATE
+0000001A= 0001                      23  MARSPEDX    DC.W    1
+0000001C= 004F                      24  SUMMAR      DC.W    $4F                     
+0000001E= 0007                      25  NUMMAR      DC.W    7
+00000020= 0000                      26  MAXMAR      DC.W    0
+00000022= 0000                      27  MARTIMER    DC.W    0
+00000024= 0000                      28  BORDCOLL    DC.W    0
+00000026= 00A0                      29  ROWTIMER    DC.W    $A0
+00000028= 0000                      30  RDMCOUNT    DC.W    0
+0000002A                            31  
+0000002A                            32  ; --- SHOOTMAR MARCIANO RELATED VARIABLES---------------------------------------
+0000002A= 0000                      33  MAXSHTMA    DC.W    0
+0000002C                            34  
+0000002C                            35  
+0000002C                            36  ; --- SHIP RELATED VARIABLES ---------------------------------------------------
+0000002C                            37  
+0000002C                            38  SHIPPOSY    DS.W    1                       ; SHIP Y COORDINATE
+0000002E                            39  SHIPPOSX    DS.W    1                       ; SHIP X COORDINATE
+00000030= 0000                      40  SHIPVEL     DC.W    0
+00000032= 0000                      41  LENGLIFE    DC.W    0
+00000034= 0003                      42  LIFES       DC.W    3
+00000036                            43  
+00000036                            44  ; --- SCOREBOARD RELATED VARIABLES ---------------------------------------------
+00000036                            45  
+00000036                            46  SCOOUT      DS.W    1                       ; SCORE (50*MARCIANOS KILLED)
+00000038                            47  
+00000038                            48  ; --- STATE RELATED VARIABLES --------------------------------------------------
+00000038                            49  
+00000038                            50  STACUR      DS.W    1                       ; CURRENT STATE
+0000003A                            51  STANEXT     DS.W    1
+0000003C                            52  
+0000003C                            53  ; --- INTRO STATE RELATED VARIABLES --------------------------------------------
+0000003C                            54  
+0000003C                            55  ISCTIMER    DS.W    1                       ; INTRO TIMER
+0000003E                            56  
+0000003E                            57  ;--- MOUSE REALTED VARIABLES ---------------------------------------------------
+0000003E                            58  
+0000003E                            59  BUTTON_R    DS.W    1
+00000040                            60  BUTTON_L    DS.W    1
+00000042                            61  MOUSEX      DS.W    1
+00000044                            62  MOUSEY      DS.W    1
+00000046                            63  
+00000046                            64  
+00000046                            65  
+00000046                            66  
+00000046                            67  
+00000046                            68  
+00000046                            69  
+00000046                            70  
+00000046                            71  
+00000046                            72  
+00000046                            73  
+00000046                            74  
+00000046                            75  
+00000046                            76  
+00000046                            77  
+00000046                            78  
+Line 79 WARNING: END directive missing, starting address not set
+
+No errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+BORDCOLL            24
+BUTCOL1             2
+BUTCOL2             6
+BUTCOL3             A
+BUTTON_L            40
+BUTTON_R            3E
+ISCTIMER            3C
+LENGLIFE            32
+LIFES               34
+MARPOSX             16
+MARPOSY             18
+MARSPEDX            1A
+MARTIMER            22
+MAXMAR              20
+MAXSHTMA            2A
+MOUSEX              42
+MOUSEY              44
+NUMMAR              1E
+RDMCOUNT            28
+ROWTIMER            26
+SCOOUT              36
+SHIPPOSX            2E
+SHIPPOSY            2C
+SHIPVEL             30
+SHOTIMER            14
+SHOTPOSX            E
+SHOTPOSY            10
+SHOTVELY            12
+STACUR              38
+STANEXT             3A
+SUMMAR              1C
+TOUCHED             0

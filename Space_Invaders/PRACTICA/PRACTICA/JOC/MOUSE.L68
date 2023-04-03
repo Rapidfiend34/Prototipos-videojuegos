@@ -1,0 +1,78 @@
+0000287C Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 04/01/2023 21:24:55
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :      MOUSE
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00000000                             7  MOINIT      
+00000000  48E7 C0C0                  8              MOVEM.L D0-D1/A0-A1,-(A7)
+00000004  323C 0101                  9              MOVE.W  #$0101,D1
+00000008  103C 003C                 10              MOVE.B  #60,D0
+0000000C  4E4F                      11              TRAP    #15
+0000000E  7000                      12              MOVEQ   #0,D0
+Line 13 ERROR: Undefined symbol
+00000010  33C0 005455B8             13              MOVE.W  D0,(BUTTON_R)
+Line 14 ERROR: Undefined symbol
+00000016  33C0 005455B8             14              MOVE.W  D0,(BUTTON_L)
+0000001C  4CDF 0303                 15              MOVEM.L (A7)+,D0-D1/A0-A1
+00000020                            16  
+00000020  4E75                      17              RTS
+00000022                            18              
+00000022                            19  MOINTE      
+00000022  48E7 C000                 20              MOVEM.L D0-D1,-(A7)
+00000026  7202                      21              MOVEQ   #2,D1
+00000028  103C 003D                 22              MOVE.B  #61,D0
+0000002C  4E4F                      23              TRAP    #15
+0000002E                            24              
+0000002E  7201                      25              MOVEQ   #1,D1
+00000030  0800 0000                 26              BTST    #0,D0
+00000034  6700 0008                 27              BEQ     NOT_LEFT
+Line 28 ERROR: Undefined symbol
+00000038  33C1 005455B8             28              MOVE.W  D1,(BUTTON_L)
+0000003E                            29  NOT_LEFT    
+0000003E  0800 0001                 30              BTST    #1,D0
+00000042  6700 0008                 31              BEQ     NOT_RIGHT
+Line 32 ERROR: Undefined symbol
+00000046  33C1 005455B8             32              MOVE.W  D1,(BUTTON_R)
+0000004C                            33  NOT_RIGHT   
+0000004C  4CDF 0003                 34              MOVEM.L (A7)+,D0-D1
+00000050  4E75                      35              RTS
+00000052                            36             
+00000052                            37              
+00000052                            38  MOMOVE      
+00000052  48E7 C0C0                 39              MOVEM.L D0-D1/A0-A1,-(A7)
+00000056  7200                      40              MOVEQ   #0,D1
+00000058  103C 003D                 41              MOVE.B  #61,D0
+0000005C  4E4F                      42              TRAP    #15
+0000005E                            43              
+Line 44 ERROR: Undefined symbol
+0000005E  33C1 005455B8             44              MOVE.W  D1,(MOUSEX)
+Line 45 ERROR: Undefined symbol
+00000064  3039 004DBD16             45              MOVE.W  (MOUSEX),D0
+0000006A  4841                      46              SWAP    D1
+0000006C                            47              
+Line 48 ERROR: Undefined symbol
+0000006C  33C1 005455B8             48              MOVE.W  D1,(MOUSEY)
+00000072  4CDF 0303                 49              MOVEM.L (A7)+,D0-D1/A0-A1
+00000076                            50  
+00000076  4E75                      51              RTS
+00000078                            52  
+00000078                            53  
+Line 54 WARNING: END directive missing, starting address not set
+
+7 errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+MOINIT              0
+MOINTE              22
+MOMOVE              52
+NOT_LEFT            3E
+NOT_RIGHT           4C

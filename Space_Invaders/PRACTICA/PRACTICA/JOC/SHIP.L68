@@ -1,0 +1,221 @@
+000015AC Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 22/11/2022 12:57:57
+
+00000000                             1  ; ==============================================================================
+00000000                             2  ; SHIP MANAGEMENT
+00000000                             3  ; ==============================================================================
+00000000                             4              
+00000000                             5  ; ------------------------------------------------------------------------------
+00000000                             6              ;INCBIN "C:/Users/Aaron/OneDrive/Documents/Año2/EC2/convertPNGtoBMP/convertPNGtoBMP/nave.bmp"
+00000000                             7  SHIPINIT
+00000000                             8  ; INITIALIZE SHIP.
+00000000                             9  ; INPUT    : NONE 
+00000000                            10  ; OUTPUT   : NONE
+00000000                            11  ; MODIFIES : NONE
+00000000                            12  ; ------------------------------------------------------------------------------
+Line 13 ERROR: Undefined symbol
+00000000  33FC BD16 005455B8        13              MOVE.W  #SCRHEIGH,(SHIPPOSY)
+Line 14 ERROR: Undefined symbol
+00000008  33FC 017C 005455B8        14              MOVE.W  #380,(SHIPPOSX)
+00000010  4E75                      15              RTS
+00000012                            16              
+00000012                            17  ; ------------------------------------------------------------------------------
+00000012                            18  SHIPUPD
+00000012                            19  ; UPDATES THE SHIP.
+00000012                            20  ; INPUT    : NONE 
+00000012                            21  ; OUTPUT   : NONE
+00000012                            22  ; MODIFIES : NONE
+00000012                            23  ; ------------------------------------------------------------------------------
+00000012                            24              
+00000012  48E7 C000                 25              MOVEM.L  D0-D1,-(A7)
+00000016                            26              
+00000016                            27              ; UPDATE Y COORDINATE
+00000016                            28              ;MOVE.W  (SHIPVEL),D0
+00000016                            29              ;ADD.W   D0,(SHIPPOSX)
+Line 30 ERROR: Undefined symbol
+00000016  3039 004DBD16             30              MOVE.W  (SHIPPOSY),D0
+Line 31 ERROR: Undefined symbol
+0000001C  0839 0001 005455B8        31              BTST.B  #1,(KBDVAL)
+00000024  6700 0006                 32              BEQ     .CHKDWN
+Line 33 ERROR: Undefined symbol
+00000028  0440 BD16                 33              SUB.W   #SHIPSPED,D0
+Line 34 ERROR: Undefined symbol
+0000002C  0839 0003 005455B8        34  .CHKDWN     BTST.B  #3,(KBDVAL)
+00000034  6700 0006                 35              BEQ     .CHKSHOT
+00000038                            36              ;BEQ     .CHKLEFT
+Line 37 ERROR: Undefined symbol
+00000038  0640 BD16                 37              ADD.W   #SHIPSPED,D0
+Line 38 ERROR: Undefined symbol
+0000003C  0839 0004 005455B8        38  .CHKSHOT    BTST.B  #4,(KBDEDGE) 
+00000044  6700 0008                 39              BEQ     .CHKLEFT
+Line 40 ERROR: Undefined symbol
+00000048  4EB9 004DBD16             40              JSR     SHOTINIT 
+0000004E                            41              ;UPDATE X COORDINATE
+0000004E                            42  .CHKLEFT    ;MOVE.W  (SHIPVEL),D1
+Line 43 ERROR: Undefined symbol
+0000004E  3239 004DBD16             43              MOVE.W  (SHIPPOSX),D1
+Line 44 ERROR: Undefined symbol
+00000054  0839 0000 005455B8        44              BTST.B  #0,(KBDVAL)
+0000005C  6700 0006                 45              BEQ    .CHKRIGH
+Line 46 ERROR: Undefined symbol
+00000060  0441 BD16                 46              SUB.W   #SHIPSPED,D1
+00000064                            47              ;SUB.W   #1,(SHIPVEL)
+Line 48 ERROR: Undefined symbol
+00000064  0839 0002 005455B8        48  .CHKRIGH    BTST.B  #2,(KBDVAL)
+0000006C  6700 0006                 49              BEQ     .CONT
+Line 50 ERROR: Undefined symbol
+00000070  0641 BD16                 50              ADD.W   #SHIPSPED,D1
+00000074                            51              ;ADD.W   #1,(SHIPVEL)
+00000074                            52       
+00000074                            53              ; CHECK COLLISIONS
+Line 54 ERROR: Comma expected
+00000074                            54  .CONT       CMP.W   #SHIPHEIG/2,D0
+00000074  6C00 000E                 55              BGE     .CONT2
+Line 56 ERROR: Comma expected
+00000078                            56              MOVE.W  #SHIPHEIG/2,D0
+00000078  6000 003A                 57              BRA     .DONE
+Line 58 ERROR: Symbol value differs between first and second pass
+0000007C                            58  .CONT2      CMP.W   #SCRHEIGH-SHIPHEIG/2,D0
+0000007C  6F00 0016                 59              BLE     .CONT3
+Line 60 ERROR: Comma expected
+00000080                            60              MOVE.W  #SCRHEIGH-SHIPHEIG/2,D0
+00000080                            61             
+00000080                            62  
+00000080  6000 0032                 63              BRA     .DONE
+Line 64 ERROR: Symbol value differs between first and second pass
+00000084                            64  .CONT3      CMP     #SCRWIDTH-SHIPWIDT/2,D1
+00000084  6F00 001E                 65              BLE     .CONT4
+Line 66 ERROR: Comma expected
+00000088                            66              MOVE.W  #SCRWIDTH-SHIPWIDT/2,D1
+00000088                            67             ; MOVE.W  #SCRWIDTH-SHIPWIDT/2,(SHIPPOSX)
+00000088                            68  
+00000088  6000 002A                 69              BRA     .DONE
+Line 70 ERROR: Symbol value differs between first and second pass
+0000008C                            70  .CONT4      CMP.W   #SHIPWIDT,D1
+0000008C  6C00 0026                 71              BGE     .DONE
+Line 72 ERROR: Undefined symbol
+00000090  323C BD16                 72              MOVE.W  #SHIPWIDT,D1
+00000094                            73              ;MOVE.W  #0,(SHIPVEL)
+00000094                            74  
+00000094  6000 001E                 75              BRA     .DONE
+00000098                            76              
+00000098                            77              
+00000098                            78  
+00000098                            79              ; UPDATE VARIABLE
+Line 80 ERROR: Symbol value differs between first and second pass
+00000098                            80  .DONE       MOVE.W  D0,(SHIPPOSY)
+00000098                            81              ;MOVE.L  (SHIPVEL),D1
+00000098                            82              ;ADD.W  D1,(SHIPPOSX)
+Line 83 ERROR: Undefined symbol
+00000098  33C1 005455B8             83              MOVE.W  D1,(SHIPPOSX)
+0000009E                            84  
+0000009E  4CDF 0003                 85              MOVEM.L  (A7)+,D0-D1
+000000A2                            86  
+000000A2  4E75                      87              RTS
+000000A4                            88              
+000000A4                            89  ; ------------------------------------------------------------------------------
+Line 90 ERROR: Symbol value differs between first and second pass
+000000A4                            90  SHIPPLOT
+000000A4                            91  ; PLOT THE SHIP.
+000000A4                            92  ; INPUT    : NONE 
+000000A4                            93  ; OUTPUT   : NONE
+000000A4                            94  ; MODIFIES : NONE
+000000A4                            95  ; ------------------------------------------------------------------------------
+000000A4                            96  
+000000A4  48E7 F800                 97              MOVEM.L D0-D4/D1-D2,-(A7)
+000000A8                            98  
+000000A8                            99              ; SET CONTOUR COLOR
+000000A8  103C 0050                100              MOVE.B  #80,D0
+Line 101 ERROR: Undefined symbol
+000000AC  223C 004DBD16            101              MOVE.L  #SHIPPCOL,D1
+000000B2  4E4F                     102              TRAP    #15
+000000B4                           103              
+000000B4                           104              ; SET FILL COLOR
+000000B4  103C 0051                105              MOVE.B  #81,D0
+Line 106 ERROR: Undefined symbol
+000000B8  223C 004DBD16            106              MOVE.L  #SHIPFCOL,D1
+000000BE  4E4F                     107              TRAP    #15
+000000C0                           108              
+000000C0                           109              ; DEFINE COORDINATES
+Line 110 ERROR: Undefined symbol
+000000C0  3239 004DBD16            110              MOVE.W  (SHIPPOSX),D1
+Line 111 ERROR: Undefined symbol
+000000C6  3639 004DBD16            111              MOVE.W  (SHIPPOSX),D3
+Line 112 ERROR: Comma expected
+000000CC                           112              SUB.W   #SHIPWIDT/2,D1
+Line 113 ERROR: Comma expected
+000000CC                           113              ADD.W   #SHIPWIDT/2,D3
+Line 114 ERROR: Undefined symbol
+000000CC  3439 004DBD16            114              MOVE.W  (SHIPPOSY),D2
+Line 115 ERROR: Comma expected
+000000D2                           115              SUB.W   #SHIPHEIG/2,D2
+000000D2  3802                     116              MOVE.W  D2,D4
+Line 117 ERROR: Undefined symbol
+000000D4  0644 BD16                117              ADD.W   #SHIPHEIG,D4
+000000D8                           118              ;JSR     SHIPDR
+000000D8                           119              ; DRAW RECTANGLE
+000000D8  103C 0057                120              MOVE.B  #87,D0
+000000DC  4E4F                     121              TRAP    #15
+000000DE                           122              
+000000DE  4CDF 001F                123              MOVEM.L (A7)+,D0-D4/D1-D2
+000000E2                           124  
+000000E2  4E75                     125              RTS
+000000E4                           126              
+Line 127 ERROR: Symbol value differs between first and second pass
+000000E4  48E7 F000                127  SHIPDR      MOVEM.L D1-D2/D0-D3,-(A7)
+000000E8  383C 0079                128              MOVE.W  #121,D4
+000000EC  103C 0050                129              MOVE.B  #80,D0
+000000F0  2239 002F4310            130              MOVE.L  $002F4310,D1            ;$00BBGGRR
+000000F6  4E4F                     131              TRAP    #15
+000000F8                           132  
+000000F8  103C 0052                133              MOVE.B  #82,D0
+Line 134 ERROR: Symbol value differs between first and second pass
+000000FC                           134  .SEC1       MOVE.W  #NUMP,D3
+000000FC  3203                     135              MOVE.W  D3,D1
+Line 136 ERROR: Symbol value differs between first and second pass
+000000FE                           136  .SEC0       SUB.W   #1,D1
+000000FE  343C 0000                137              MOVE.W  #0,D2
+00000102  4E4F                     138              TRAP    #15
+00000104  51CB 002A                139              DBRA    D3,.SEC0
+00000108  5242                     140              ADD.W   #1,D2
+0000010A  51CC 001E                141              DBRA    D4,.SEC1
+0000010E  =0000007A                142  NUMP    EQU 122  
+0000010E  4CDF 000F                143              MOVEM.L (A7)+,D1-D2/D0-D3
+00000112  4E75                     144              RTS
+00000114                           145  
+00000114                           146  
+00000114                           147  
+00000114                           148  
+00000114                           149  
+00000114                           150  
+00000114                           151  
+00000114                           152  
+00000114                           153  
+00000114                           154  
+00000114                           155  
+Line 156 WARNING: END directive missing, starting address not set
+
+37 errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+NUMP                7A
+SHIPDR              112
+SHIPDR:SEC0         130
+SHIPDR:SEC1         12A
+SHIPINIT            0
+SHIPPLOT            C6
+SHIPUPD             12
+SHIPUPD:CHKDWN      2C
+SHIPUPD:CHKLEFT     4E
+SHIPUPD:CHKRIGH     64
+SHIPUPD:CHKSHOT     3C
+SHIPUPD:CONT        74
+SHIPUPD:CONT2       84
+SHIPUPD:CONT3       94
+SHIPUPD:CONT4       A4
+SHIPUPD:DONE        B4
